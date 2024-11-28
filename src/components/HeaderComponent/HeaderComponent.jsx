@@ -12,6 +12,7 @@ import {
   CaretDownOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 
 const HeaderComponent = () => {
   return (
@@ -21,16 +22,23 @@ const HeaderComponent = () => {
           <WrapperTextHeader>Viet Ecommerce</WrapperTextHeader>
         </Col>
         <Col span={12}>
-          <Search
+          <ButtonInputSearch
             placeholder="input search text"
-            allowClear
+            // allowClear
             // onSearch={onSearch}
             // style={{ width: 200 }}
-            // size="large"
-            enterButton
+            size="large"
+            // enterButton
+            textButton="Tìm kiếm"
+            backgroundColorInput="#fff"
+            backgroundColorButton="rgb(13,92,182)"
+            bordered={false}
           />
         </Col>
-        <Col span={6} style={{ display: "flex", gap: "20px" }}>
+        <Col
+          span={6}
+          style={{ display: "flex", gap: "20px", alignItems: "center" }}
+        >
           <WrapperHeaderAccount>
             <UserOutlined style={{ fontSize: "30px" }} />
             <div>
@@ -41,10 +49,10 @@ const HeaderComponent = () => {
               </div>
             </div>
           </WrapperHeaderAccount>
-          <div>
+          <WrapperHeaderAccount>
             <ShoppingCartOutlined style={{ fontSize: "30px", color: "#fff" }} />
             <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
-          </div>
+          </WrapperHeaderAccount>
         </Col>
       </WrapperHeader>
     </div>
