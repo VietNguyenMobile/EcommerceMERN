@@ -18,5 +18,12 @@ export const WrapperButtonMore = styled(ButtonComponent)`
       color: #fff;
     }
   }
-  
+`;
+
+export const WrapperProducts = styled.div`
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: center;
 `;
