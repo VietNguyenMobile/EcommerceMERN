@@ -6,7 +6,6 @@ export const WrapperTypeProduct = styled.div`
   align-items: center;
   gap: 24px;
   justify-content: flex-start;
-  border-bottom: 1px solid #e8e8e8;
   height: 44px;
 `;
 
@@ -22,8 +21,8 @@ export const WrapperButtonMore = styled(ButtonComponent)`
 
 export const WrapperProducts = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 14px;
   flex-wrap: wrap;
   margin-top: 20px;
-  justify-content: center;
+  
 `;

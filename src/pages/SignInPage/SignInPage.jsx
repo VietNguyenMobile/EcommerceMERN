@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "antd";
 import {
   WrapperContainerLeft,
@@ -8,8 +8,11 @@ import {
 import InputForm from "../../components/InputForm/InputForm";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import imageLogo from "../../assets/images/sign_in.png";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 const SignInPage = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
   return (
     <div
       style={{
@@ -36,7 +39,22 @@ const SignInPage = () => {
             style={{ marginBottom: "10px" }}
             placeholder="abc@gmail.com"
           />
-          <InputForm placeholder="password" />
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "4px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <InputForm
+              placeholder="password"
+              type={isShowPassword ? "text" : "password"}
+            />
+          </div>
 
           <ButtonComponent
             textButton="Đăng nhập"

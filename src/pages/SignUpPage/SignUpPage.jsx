@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "antd";
 import {
   WrapperContainerLeft,
@@ -8,8 +8,10 @@ import {
 import InputForm from "../../components/InputForm/InputForm";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import imageLogo from "../../assets/images/sign_in.png";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 const SignUpPage = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div
       style={{
@@ -36,8 +38,41 @@ const SignUpPage = () => {
             style={{ marginBottom: "10px" }}
             placeholder="abc@gmail.com"
           />
-          <InputForm style={{ marginBottom: "10px" }} placeholder="password" />
-          <InputForm placeholder="confirm password" />
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "4px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <InputForm
+              placeholder="password"
+              type={isShowPassword ? "text" : "password"}
+              style={{ marginBottom: "10px" }}
+            />
+          </div>
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "4px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <InputForm
+              placeholder="confirm password"
+              type={isShowPassword ? "text" : "password"}
+              style={{ marginBottom: "10px" }}
+            />
+          </div>
+
           <ButtonComponent
             textButton="Đăng nhập"
             styleButton={{
