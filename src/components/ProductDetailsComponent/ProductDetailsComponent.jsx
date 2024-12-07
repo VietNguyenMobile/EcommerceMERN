@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Image, InputNumber } from "antd";
+import { Col, Row, Image } from "antd";
 import { StarFilled, PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import imageProduct from "../../assets/images/product_sample.webp";
 import imageProductSmall from "../../assets/images/product_sample_small.webp";
@@ -13,7 +13,7 @@ import {
   WrapperAddressProduct,
   WrapperQualityProduct,
   WrapperInputNumber,
-  WrapperBtnQualityProduct,
+  
 } from "./style";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
@@ -28,12 +28,7 @@ const ProductDetailsComponent = () => {
         span={10}
         style={{ borderRight: "1px solid #e5e5e5", paddingRight: "8px" }}
       >
-        <Image
-          src={imageProduct}
-          alt="image product"
-          preview={false}
-          // style={{ marginRight: "20px" }}
-        />
+        <Image src={imageProduct} alt="image product" preview={false} />
         <Row style={{ paddingTop: "10px", justifyContent: "space-between" }}>
           <WrapperStyleColSmall span={4}>
             <WrapperStyleImageSmall
@@ -137,7 +132,7 @@ const ProductDetailsComponent = () => {
               fontWeight: 700,
             }}
             size={40}
-            border={false}
+       
           />
           <ButtonComponent
             textButton="Mua trả sau"
@@ -145,13 +140,12 @@ const ProductDetailsComponent = () => {
               backgroundColor: "#FFF",
               height: "48px",
               width: "220px",
-              border: "none",
               borderRadius: "4px",
               border: "1px solid rgb(13,92,182)",
             }}
             styleTextButton={{ color: "rgb(13,92,182)", fontSize: "15px" }}
             size={40}
-            border={false}
+         
           />
         </div>
       </Col>

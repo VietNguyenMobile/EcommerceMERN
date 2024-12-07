@@ -13,10 +13,26 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
+import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = () => {
+
+  const navigate = useNavigate();
+
+  const handleNavigateLogin = () => {
+    console.log("Navigate to login page");
+    navigate("/sign-in");
+  };
+
   return (
-    <div style={{width: '100%', background: 'rgb(26,148,255)', display: 'flex', justifyContent: 'center'}}>
+    <div
+      style={{
+        width: "100%",
+        background: "rgb(26,148,255)",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <WrapperHeader>
         <Col span={5}>
           <WrapperTextHeader>Viet Ecommerce</WrapperTextHeader>
@@ -41,7 +57,7 @@ const HeaderComponent = () => {
         >
           <WrapperHeaderAccount>
             <UserOutlined style={{ fontSize: "30px" }} />
-            <div>
+            <div onClick={handleNavigateLogin} style={{cursor: 'pointer'}}>
               <WrapperTextHeaderSmall>Đăng nhập/Đăng ký</WrapperTextHeaderSmall>
               <div>
                 <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>

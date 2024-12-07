@@ -9,9 +9,37 @@ import InputForm from "../../components/InputForm/InputForm";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import imageLogo from "../../assets/images/sign_in.png";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+  const handleNavigateSignIn = () => {
+    navigate("/sign-in");
+  };
+
+  const handleOnChangeEmail = (value) => {
+    setEmail(value);
+  };
+
+  const handleOnChangePassword = (value) => {
+    setPassword(value);
+  };
+
+  const handleOnChangeConfirmPassword = (value) => {
+    setConfirmPassword(value);
+  };
+
+  const handleSignUp = () => {
+    console.log("Sign Up", email, password, confirmPassword);
+  };
+
   return (
     <div
       style={{
@@ -37,44 +65,63 @@ const SignUpPage = () => {
           <InputForm
             style={{ marginBottom: "10px" }}
             placeholder="abc@gmail.com"
+            value={email}
+            onChange={handleOnChangeEmail}
           />
           <div style={{ position: "relative" }}>
             <span
+              onClick={() => setIsShowPassword(!isShowPassword)}
               style={{
                 zIndex: 10,
                 position: "absolute",
-                top: "4px",
+                top: "8px",
                 right: "8px",
+                cursor: "pointer",
               }}
             >
-              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+              {isShowPassword ? (
+                <EyeFilled style={{ fontSize: "16px" }} />
+              ) : (
+                <EyeInvisibleFilled style={{ fontSize: "16px" }} />
+              )}
             </span>
             <InputForm
               placeholder="password"
               type={isShowPassword ? "text" : "password"}
               style={{ marginBottom: "10px" }}
+              value={password}
+              onChange={handleOnChangePassword}
             />
           </div>
           <div style={{ position: "relative" }}>
             <span
+              onClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)}
               style={{
                 zIndex: 10,
                 position: "absolute",
-                top: "4px",
+                top: "8px",
                 right: "8px",
+                cursor: "pointer",
               }}
             >
-              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+              {isShowConfirmPassword ? (
+                <EyeFilled style={{ fontSize: "16px" }} />
+              ) : (
+                <EyeInvisibleFilled style={{ fontSize: "16px" }} />
+              )}
             </span>
             <InputForm
               placeholder="confirm password"
-              type={isShowPassword ? "text" : "password"}
+              type={isShowConfirmPassword ? "text" : "password"}
               style={{ marginBottom: "10px" }}
+              value={confirmPassword}
+              onChange={handleOnChangeConfirmPassword}
             />
           </div>
 
           <ButtonComponent
-            textButton="Đăng nhập"
+            disabled={!(email && password && confirmPassword)}
+            textButton="Đăng ký"
             styleButton={{
               backgroundColor: "rgb(255,57,69)",
               height: "48px",
@@ -89,11 +136,18 @@ const SignUpPage = () => {
               fontWeight: 700,
             }}
             size={40}
-            border={false}
+        
+            onClick={handleSignUp}
           />
           <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
           <p>
-            Bạn đã có tài khoản? <WrapperTextLight>Đăng nhập</WrapperTextLight>
+            Bạn đã có tài khoản?{" "}
+            <WrapperTextLight
+              style={{ cursor: "pointer" }}
+              onClick={handleNavigateSignIn}
+            >
+              Đăng nhập
+            </WrapperTextLight>
           </p>
         </WrapperContainerLeft>
         <WrapperContainerRight>
