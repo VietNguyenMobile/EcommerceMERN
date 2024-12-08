@@ -10,6 +10,10 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import imageLogo from "../../assets/images/sign_in.png";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useMutationHooks } from "../../hooks/useMutationHook";
+import * as UserService from "../../services/UserService";
+import Loading from "../../components/LoadingComponent/Loading";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const SignInPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -22,16 +26,44 @@ const SignInPage = () => {
     navigate("/sign-up");
   };
 
-  const handleOnChangeEmail = (value) => {
-    setEmail(value);
+  // const mutation = useMutationHooks((data) => UserService.loginUser(data));
+
+  // const { isPending, error, data } = useQuery({
+  //   queryKey: ["repoData"],
+  //   queryFn: () =>
+  //     fetch("https://api.github.com/repos/TanStack/query").then((res) =>
+  //       res.json()
+  //     ),
+  // });
+
+  // Mutations
+  const mutation = useMutation({
+    mutationFn: (data) => UserService.loginUser(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
+  const { data, error, isLoading, isSuccess } = mutation;
+  console.log("data", data);
+  console.log("error", error);
+  console.log("isLoading", isLoading);
+
+  const handleOnChangeEmail = (e) => {
+    // console.log("handleOnChangeEmail value", value);
+    // console.log("handleOnChangeEmail e.target.value", value.target.value);
+    setEmail(e.target.value);
   };
 
-  const handleOnChangePassword = (value) => {
-    setPassword(value);
+  const handleOnChangePassword = (e) => {
+    // console.log("handleOnChangePassword value", value);
+    setPassword(e.target.value);
   };
 
   const handleSignIn = () => {
     console.log("Sign In", email, password);
+    mutation.mutate({ email, password });
   };
 
   return (
@@ -87,25 +119,29 @@ const SignInPage = () => {
             />
           </div>
 
-          <ButtonComponent
-            disabled={email === "" || password === ""}
-            textButton="Đăng nhập"
-            onClick={handleSignIn}
-            styleButton={{
-              backgroundColor: "rgb(255,57,69)",
-              height: "48px",
-              width: "100%",
-              border: "none",
-              borderRadius: "4px",
-              margin: "26px 0 10px",
-            }}
-            styleTextButton={{
-              color: "#fff",
-              fontSize: "15px",
-              fontWeight: 700,
-            }}
-            size={40}
-          />
+          {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
+          <Loading isLoading={!!isLoading}>
+            <ButtonComponent
+              disabled={email === "" || password === ""}
+              textButton="Đăng nhập"
+              onClick={handleSignIn}
+              styleButton={{
+                backgroundColor: "rgb(255,57,69)",
+                height: "48px",
+                width: "100%",
+                border: "none",
+                borderRadius: "4px",
+                margin: "26px 0 10px",
+              }}
+              styleTextButton={{
+                color: "#fff",
+                fontSize: "15px",
+                fontWeight: 700,
+              }}
+              size={40}
+            />
+          </Loading>
+
           <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
           <p>
             Chưa có tài khoản?{" "}

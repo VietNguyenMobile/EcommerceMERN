@@ -10,6 +10,8 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import imageLogo from "../../assets/images/sign_in.png";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import * as UserService from "../../services/UserService";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const SignUpPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -24,20 +26,34 @@ const SignUpPage = () => {
     navigate("/sign-in");
   };
 
-  const handleOnChangeEmail = (value) => {
-    setEmail(value);
+  const handleOnChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  const handleOnChangePassword = (value) => {
-    setPassword(value);
+  const handleOnChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
-  const handleOnChangeConfirmPassword = (value) => {
-    setConfirmPassword(value);
+  const handleOnChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
+
+  const mutation = useMutation({
+    mutationFn: (data) => UserService.signUpUser(data),
+    onSuccess: () => {
+      // Invalidate and refetch
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
+  const { data, error, isLoading, isSuccess } = mutation;
+  console.log("data", data);
+  console.log("error", error);
+  console.log("isLoading", isLoading);
 
   const handleSignUp = () => {
     console.log("Sign Up", email, password, confirmPassword);
+    mutation.mutate({ email, password, confirmPassword });
   };
 
   return (
@@ -136,7 +152,6 @@ const SignUpPage = () => {
               fontWeight: 700,
             }}
             size={40}
-        
             onClick={handleSignUp}
           />
           <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
