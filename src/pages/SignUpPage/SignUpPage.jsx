@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "antd";
 import {
   WrapperContainerLeft,
@@ -12,6 +12,7 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import * as UserService from "../../services/UserService";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import * as message from "../../components/Message/Message";
 
 const SignUpPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -46,10 +47,19 @@ const SignUpPage = () => {
     },
   });
 
-  const { data, error, isLoading, isSuccess } = mutation;
-  console.log("data", data);
-  console.log("error", error);
-  console.log("isLoading", isLoading);
+  const { data, error, isLoading, isSuccess, isError } = mutation;
+  console.log("SignUpPage data", data);
+  console.log("SignUpPage error", error);
+  console.log("SignUpPage isLoading", isLoading);
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleNavigateSignIn();
+      message.success("Đăng ký thành công");
+    } else if (isError) {
+      message.error("Đăng ký thất bại");
+    }
+  }, [isSuccess, isError]);
 
   const handleSignUp = () => {
     console.log("Sign Up", email, password, confirmPassword);

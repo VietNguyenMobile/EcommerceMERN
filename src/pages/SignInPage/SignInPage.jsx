@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "antd";
 import {
   WrapperContainerLeft,
@@ -14,6 +14,10 @@ import { useMutationHooks } from "../../hooks/useMutationHook";
 import * as UserService from "../../services/UserService";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import * as message from "../../components/Message/Message";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../redux/slices/userSlice";
 
 const SignInPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -21,6 +25,7 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleNavigateSignUp = () => {
     navigate("/sign-up");
@@ -45,15 +50,41 @@ const SignInPage = () => {
     },
   });
 
-  const { data, error, isLoading, isSuccess } = mutation;
-  console.log("data", data);
-  console.log("error", error);
-  console.log("isLoading", isLoading);
+  const { data, error, isLoading, isSuccess, isError } = mutation;
+  // console.log("SignInPage data", data);
+  // console.log("SignInPage error", error);
+  // console.log("SignInPage isLoading", isLoading);
+  // console.log("isSuccess", isSuccess);
+
+  useEffect(() => {
+    if (isSuccess) {
+      // message.success("Đăng nhập thành công");
+      navigate("/");
+      // console.log("data", data);
+      localStorage.setItem("token", data?.access_token);
+      if (data?.access_token) {
+        const decoded = jwtDecode(data?.access_token);
+        console.log("decoded", decoded);
+        // localStorage.setItem("user", JSON.stringify(decoded));
+        if (decoded?.id) {
+          handleGetDetailUser(decoded?.id, data?.access_token);
+        }
+      }
+    } else if (isError) {
+      message.error("Đăng nhập thất bại");
+    }
+  }, [isSuccess, isError]);
 
   const handleOnChangeEmail = (e) => {
     // console.log("handleOnChangeEmail value", value);
     // console.log("handleOnChangeEmail e.target.value", value.target.value);
     setEmail(e.target.value);
+  };
+
+  const handleGetDetailUser = async (userId, access_token) => {
+    const res = await UserService.getDetailUser(userId, access_token);
+    console.log("handleGetDetailUser res", res);
+    dispatch(updateUser({ ...res.data, access_token }));
   };
 
   const handleOnChangePassword = (e) => {
