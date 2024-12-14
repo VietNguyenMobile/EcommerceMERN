@@ -49,7 +49,7 @@ const HeaderComponent = () => {
             textButton="Tìm kiếm"
             backgroundColorInput="#fff"
             backgroundColorButton="rgb(13,92,182)"
-            bordered={false}
+            // bordered={false}
           />
         </Col>
         <Col

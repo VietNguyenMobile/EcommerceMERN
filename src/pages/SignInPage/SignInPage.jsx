@@ -61,15 +61,15 @@ const SignInPage = () => {
       // message.success("Đăng nhập thành công");
       navigate("/");
       // console.log("data", data);
-      localStorage.setItem("token", data?.access_token);
-      if (data?.access_token) {
-        const decoded = jwtDecode(data?.access_token);
-        console.log("decoded", decoded);
-        // localStorage.setItem("user", JSON.stringify(decoded));
-        if (decoded?.id) {
-          handleGetDetailUser(decoded?.id, data?.access_token);
-        }
-      }
+      localStorage.setItem("access_token", JSON.stringify(data?.access_token));
+      // if (data?.access_token) {
+      //   const decoded = jwtDecode(data?.access_token);
+      //   console.log("decoded", decoded);
+      //   // localStorage.setItem("user", JSON.stringify(decoded));
+      //   if (decoded?.id) {
+      //     handleGetDetailUser(decoded?.id, data?.access_token);
+      //   }
+      // }
     } else if (isError) {
       message.error("Đăng nhập thất bại");
     }

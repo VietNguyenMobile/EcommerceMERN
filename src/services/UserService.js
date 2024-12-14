@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const axiosJwt = axios.create();
+
 const loginUser = async (data) => {
   console.log("loginUser API data : ", data);
   console.log(
@@ -26,15 +28,34 @@ const signUpUser = async (data) => {
 const getDetailUser = async (userId, access_token) => {
   console.log("getDetailUser API userId : ", userId);
 
-  const res = await axios.get(
+  const res = await axiosJwt.get(
     `${process.env.REACT_APP_API_URL}/user/get-details/${userId}`,
     {
       headers: {
         Authorization: `Bearer ${access_token}`,
+        token: `Bearer ${access_token}`,
       },
     }
   );
   return res.data;
 };
 
-export { loginUser, signUpUser, getDetailUser };
+const refreshToken = async (access_token) => {
+  console.log("refreshToken API access_token : ", access_token);
+  const res = await axiosJwt.post(
+    `${process.env.REACT_APP_API_URL}/user/refresh-token`,
+    {
+      withCredentials: true, // send cookies when cross-domain requests
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+
+  console.log("refreshToken API res", res);
+
+  return res.data;
+};
+
+export { axiosJwt, loginUser, signUpUser, getDetailUser, refreshToken };

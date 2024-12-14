@@ -26,12 +26,12 @@ const TypeProductPage = () => {
           </WrapperNavbar>
           <Col span={20}>
             <WrapperProducts span={20}>
-              <CardComponent />
-              <CardComponent />
-              <CardComponent />
-              <CardComponent />
-              <CardComponent />
-              <CardComponent />
+              <CardComponent key={`CardComponent-1`} />
+              <CardComponent key={`CardComponent-2`} />
+              <CardComponent key={`CardComponent-3`} />
+              <CardComponent key={`CardComponent-4`} />
+              <CardComponent key={`CardComponent-5`} />
+              <CardComponent key={`CardComponent-6`} />
             </WrapperProducts>
             <Pagination
               // showQuickJumper
